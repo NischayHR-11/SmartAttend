@@ -1,0 +1,37 @@
+.glassy-card {
+  background: rgba(255,255,255,0.18);
+  box-shadow: 0 8px 32px 0 rgba(31,38,135,0.18), 0 2px 8px 0 rgba(90,90,255,0.10);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border-radius: 24px;
+  border: 1.5px solid rgba(255,255,255,0.24);
+  transition: box-shadow 0.3s, transform 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+
+.glassy-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 24px;
+  pointer-events: none;
+  background: linear-gradient(120deg, rgba(91,140,255,0.12) 0%, rgba(162,89,255,0.10) 100%);
+  z-index: 0;
+}
+
+.glassy-card:hover {
+  box-shadow: 0 12px 36px 0 rgba(91,140,255,0.25), 0 4px 16px 0 rgba(162,89,255,0.18);
+  transform: translateY(-4px) scale(1.025) perspective(600px) rotateX(2deg) rotateY(-2deg);
+}
+
+.glassy-3d {
+  box-shadow: 0 8px 32px 0 rgba(31,38,135,0.18), 0 2px 8px 0 rgba(90,90,255,0.10), 0 0 24px 2px rgba(91,140,255,0.12);
+  border: 1.5px solid rgba(91,140,255,0.18);
+  background: linear-gradient(120deg, rgba(255,255,255,0.22) 0%, rgba(91,140,255,0.10) 100%);
+}
+
+.glassy-glow {
+  box-shadow: 0 0 24px 4px #5B8CFF44, 0 2px 8px 0 rgba(162,89,255,0.10);
+  border: 1.5px solid #A259FF44;
+}
