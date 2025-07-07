@@ -2,7 +2,7 @@ import React from 'react';
 import './Footer.css';
 
 const Footer = () => (
-  <footer className="footer-custom">
+  <footer id="footer" className="footer-custom">
     <div className="footer-container">
       <div className="footer-col left">
         <div className="footer-logo-row">

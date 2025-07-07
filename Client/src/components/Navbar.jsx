@@ -32,7 +32,7 @@ const Navbar = () => {
             <a href="#how" onClick={() => setMenuOpen(false)}>How It Works</a>
             <a href="#benefits" onClick={() => setMenuOpen(false)}>Benefits</a>
             <a href="#pricing" onClick={() => setMenuOpen(false)}>Pricing</a>
-            <a href="#contact" onClick={() => setMenuOpen(false)}>Contact</a>
+            <a href="#footer" onClick={() => setMenuOpen(false)}>Contact</a>
           </nav>
           <div className="nav-actions show">
             <button className="sign-in">Sign In</button>
@@ -45,7 +45,7 @@ const Navbar = () => {
         <a href="#how">How It Works</a>
         <a href="#benefits">Benefits</a>
         <a href="#pricing">Pricing</a>
-        <a href="#contact">Contact</a>
+        <a href="#footer">Contact</a>
       </nav>
       <div className="nav-actions desktop">
         <button className="sign-in">Sign In</button>
