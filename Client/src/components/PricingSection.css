@@ -49,11 +49,11 @@
 }
 
 .pricing-cards {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 40px;
+  display: flex;
+  flex-wrap: wrap;
   justify-content: center;
-  max-width: 1000px;
+  gap: 32px;
+  max-width: 1200px;
   margin: 0 auto;
 }
 
@@ -71,7 +71,9 @@
     0 20px 40px -12px rgba(0, 0, 0, 0.25),
     0 8px 25px -8px rgba(91, 140, 255, 0.1),
     inset 0 1px 0 rgba(255, 255, 255, 0.1);
-  max-width: 280px;
+  flex: 0 0 auto;
+  min-width: 280px;
+  max-width: 320px;
   min-height: 420px;
 }
 
@@ -246,14 +248,14 @@
 /* Responsive Design */
 @media (max-width: 1024px) {
   .pricing-cards {
-    grid-template-columns: repeat(3, 1fr);
     gap: 24px;
     max-width: 900px;
   }
   
   .pricing-card {
-    max-width: none;
+    max-width: 280px;
     min-height: 400px;
+    flex: 1 1 280px;
   }
   
   .pricing-card.popular {
@@ -275,7 +277,6 @@
   }
   
   .pricing-cards {
-    grid-template-columns: repeat(3, 1fr);
     max-width: 100%;
     gap: 16px;
     padding: 0 10px;
@@ -283,8 +284,9 @@
   
   .pricing-card {
     padding: 16px 12px 12px 12px;
-    max-width: none;
+    max-width: 100%;
     min-height: 360px;
+    flex: 1 1 260px;
   }
   
   .plan-name {
@@ -314,5 +316,19 @@
   
   .pricing-card.popular:hover {
     transform: perspective(1000px) rotateX(3deg) translateY(-8px) scale(1);
+  }
+}
+
+@media (max-width: 480px) {
+  .pricing-cards {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+  
+  .pricing-card {
+    max-width: 300px;
+    width: 100%;
+    flex: none;
   }
 }
