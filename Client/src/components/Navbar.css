@@ -1,42 +1,71 @@
 .navbar {
   width: 100%;
-  background: #fff;
-  color: #222;
+  background: rgba(15, 15, 35, 0.95);
+  backdrop-filter: blur(20px);
+  color: #fff;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 18px 48px;
   box-sizing: border-box;
-  box-shadow: 0 2px 12px 0 rgba(30,60,114,0.04);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
   position: relative;
   z-index: 10;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
+
+.navbar::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(91, 140, 255, 0.05) 0%, rgba(162, 89, 255, 0.05) 100%);
+  pointer-events: none;
+}
+
 .logo-section {
   display: flex;
   align-items: center;
   gap: 10px;
+  position: relative;
+  z-index: 1;
 }
+
 .logo-icon {
   display: flex;
   align-items: center;
 }
+
 .logo-text {
   font-size: 1.45rem;
   font-weight: 700;
   letter-spacing: -0.5px;
+  background: linear-gradient(135deg, #5B8CFF 0%, #A259FF 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
+
 .nav-links {
   display: flex;
   gap: 32px;
+  position: relative;
+  z-index: 1;
 }
+
 .nav-links a {
-  color: #222;
+  color: #b3c6f7;
   text-decoration: none;
   font-weight: 500;
   font-size: 1.08rem;
-  transition: color 0.2s;
+  transition: all 0.3s ease;
   position: relative;
+  padding: 8px 12px;
+  border-radius: 8px;
 }
+
 .nav-links a::after {
   content: '';
   display: block;
@@ -45,39 +74,51 @@
   bottom: -4px;
   width: 100%;
   height: 3px;
-  background: linear-gradient(90deg, #5B8CFF 0%, #A259FF 100%);
+  background: linear-gradient(135deg, #5B8CFF 0%, #A259FF 100%);
   border-radius: 2px;
   opacity: 0;
   transform: scaleX(0);
   transition: opacity 0.25s, transform 0.25s;
 }
+
 .nav-links a:hover {
-  color: #5B8CFF;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.05);
 }
+
 .nav-links a:hover::after {
   opacity: 1;
   transform: scaleX(1);
 }
+
 .nav-actions {
   display: flex;
   gap: 16px;
+  position: relative;
+  z-index: 1;
 }
+
 .sign-in {
-  background: none;
-  border: none;
-  color: #222;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #b3c6f7;
   font-weight: 500;
   font-size: 1.08rem;
   cursor: pointer;
   padding: 8px 18px;
-  border-radius: 6px;
-  transition: background 0.2s;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
 }
+
 .sign-in:hover {
-  background: #f2f2f2;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.2);
 }
+
 .get-started {
-  background: linear-gradient(90deg, #5B8CFF 0%, #A259FF 100%);
+  background: linear-gradient(135deg, #5B8CFF 0%, #A259FF 100%);
   color: #fff;
   border: none;
   font-weight: 600;
@@ -85,11 +126,30 @@
   padding: 8px 22px;
   border-radius: 8px;
   cursor: pointer;
-  box-shadow: 0 2px 8px 0 rgba(90,90,255,0.10);
-  transition: opacity 0.2s;
+  box-shadow: 0 4px 15px rgba(91, 140, 255, 0.3);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
 }
+
+.get-started::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.get-started:hover::before {
+  left: 100%;
+}
+
 .get-started:hover {
-  opacity: 0.85;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(91, 140, 255, 0.4);
 }
 .menu-toggle {
   display: none;
@@ -98,30 +158,43 @@
   align-items: center;
   width: 38px;
   height: 38px;
-  background: none;
-  border: none !important;
-  box-shadow: none;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
   cursor: pointer;
   z-index: 20;
   margin: 0;
   padding: 0;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
 }
+
+.menu-toggle:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
 .menu-toggle .bar {
   width: 26px;
   height: 3px;
-  background: #3a4a6d;
+  background: #b3c6f7;
   margin: 3px 0;
   border-radius: 2px;
   transition: all 0.3s;
 }
+
 .menu-toggle.open .bar:nth-child(1) {
   transform: translateY(6px) rotate(45deg);
+  background: #fff;
 }
+
 .menu-toggle.open .bar:nth-child(2) {
   opacity: 0;
 }
+
 .menu-toggle.open .bar:nth-child(3) {
   transform: translateY(-6px) rotate(-45deg);
+  background: #fff;
 }
 @media (max-width: 900px) {
   .navbar {
@@ -156,8 +229,9 @@
     top: 100%;
     left: 0;
     width: 100vw;
-    background: #fff;
-    box-shadow: 0 2px 12px 0 rgba(30,60,114,0.04);
+    background: rgba(15, 15, 35, 0.95);
+    backdrop-filter: blur(20px);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
     z-index: 15;
     display: none;
     opacity: 0;
@@ -167,6 +241,7 @@
     gap: 0;
     margin: 0;
     padding: 12px 16px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
   }
   .nav-links.show,
   .nav-actions.show {
@@ -175,13 +250,13 @@
     pointer-events: auto;
   }
   .nav-links a {
-    color: #222;
+    color: #b3c6f7;
     font-size: 1.12rem;
     padding: 14px 0 10px 0;
     width: 100%;
     text-align: left;
     border: none;
-    border-bottom: 1px solid #f2f2f2;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     background: none;
     font-weight: 500;
     border-radius: 0;
@@ -194,19 +269,20 @@
     border-bottom: none;
   }
   .nav-links a:hover, .nav-links a:active {
-    background: #f6f8ff;
-    color: #5B8CFF;
+    background: rgba(255, 255, 255, 0.05);
+    color: #fff;
   }
   .nav-actions {
     position: absolute;
     top: calc(100% + 220px);
     left: 0;
     width: 100vw;
-    background: #fff;
-    box-shadow: 0 2px 12px 0 rgba(30,60,114,0.04);
+    background: rgba(15, 15, 35, 0.95);
+    backdrop-filter: blur(20px);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
     padding: 0;
     gap: 0;
-    border-top: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
   }
   .sign-in, .get-started {
     width: 100%;
@@ -223,7 +299,7 @@
     justify-content: flex-start;
     font-weight: 600;
     transition: background 0.2s, color 0.2s;
-    border-bottom: 1px solid #f2f2f2;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   }
   .sign-in {
     background: none;
