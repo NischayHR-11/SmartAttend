@@ -1,8 +1,21 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Navbar.css';
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const navigate = useNavigate();
+
+  const handleSignInClick = () => {
+    navigate('/auth');
+    setMenuOpen(false);
+  };
+
+  const handleGetStartedClick = () => {
+    navigate('/auth');
+    setMenuOpen(false);
+  };
+
   return (
     <header className="navbar">
       <div className="logo-section">
@@ -35,8 +48,8 @@ const Navbar = () => {
             <a href="#footer" onClick={() => setMenuOpen(false)}>Contact</a>
           </nav>
           <div className="nav-actions show">
-            <button className="sign-in">Sign In</button>
-            <button className="get-started">Get Started</button>
+            <button className="sign-in" onClick={handleSignInClick}>Sign In</button>
+            <button className="get-started" onClick={handleGetStartedClick}>Get Started</button>
           </div>
         </div>
       )}
@@ -48,8 +61,8 @@ const Navbar = () => {
         <a href="#footer">Contact</a>
       </nav>
       <div className="nav-actions desktop">
-        <button className="sign-in">Sign In</button>
-        <button className="get-started">Get Started</button>
+        <button className="sign-in" onClick={handleSignInClick}>Sign In</button>
+        <button className="get-started" onClick={handleGetStartedClick}>Get Started</button>
       </div>
     </header>
   );
