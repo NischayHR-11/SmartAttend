@@ -274,7 +274,7 @@ const AuthPage = () => {
         Back to Home
       </button>
       
-      <div className="auth-container" style={{ marginTop: '-180px' }}>
+      <div className="auth-container" style={{ marginTop: '-20px' }}>
         <div className="auth-card">
           <div className="auth-header">
             <div className="auth-logo">
