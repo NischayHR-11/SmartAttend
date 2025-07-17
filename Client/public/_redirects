@@ -1,1 +1,4 @@
 /* /index.html 200
+/auth/* /index.html 200
+/student-dashboard/* /index.html 200
+/teacher-dashboard/* /index.html 200
