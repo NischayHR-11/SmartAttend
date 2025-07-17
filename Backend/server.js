@@ -96,9 +96,22 @@ app.use((err, req, res, next) => {
 
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, () => {
-  console.log(`🚀 Server running on port ${PORT}`);
-  console.log(`📊 Environment: ${process.env.NODE_ENV}`);
-});
+const startServer = (port) => {
+  const server = app.listen(port)
+    .on('listening', () => {
+      console.log(`🚀 Server running on port ${port}`);
+      console.log(`📊 Environment: ${process.env.NODE_ENV}`);
+    })
+    .on('error', (err) => {
+      if (err.code === 'EADDRINUSE') {
+        console.log(`⚠️ Port ${port} is already in use, trying port ${port + 1}`);
+        startServer(port + 1);
+      } else {
+        console.error('❌ Server error:', err);
+      }
+    });
+};
+
+startServer(PORT);
 
 module.exports = app;
