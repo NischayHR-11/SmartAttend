@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
+import { API_ENDPOINTS, apiCall } from '../config/api';
 import './Dashboard.css';
 
 const TeacherDashboard = () => {
@@ -9,6 +10,15 @@ const TeacherDashboard = () => {
     totalClasses: 0,
     todayClasses: 0,
     attendanceRate: 0
+  });
+
+  const [showStudentModal, setShowStudentModal] = useState(false);
+  const [studentForm, setStudentForm] = useState({
+    name: '',
+    usn: '',
+    rollNo: '',
+    branch: '',
+    semester: ''
   });
 
   useEffect(() => {
@@ -31,6 +41,46 @@ const TeacherDashboard = () => {
 
   const toggleNotifications = () => {
     setShowNotifications(!showNotifications);
+  };
+
+  const handleStudentFormSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await apiCall(API_ENDPOINTS.REGISTER_STUDENT, {
+        method: 'POST',
+        body: JSON.stringify(studentForm),
+      });
+
+      if (response.success) {
+        // Reset form and close modal
+        setStudentForm({
+          name: '',
+          usn: '',
+          rollNo: '',
+          branch: '',
+          semester: ''
+        });
+        setShowStudentModal(false);
+        alert('Student registered successfully!');
+        
+        // Refresh student count
+        setStats(prev => ({
+          ...prev,
+          totalStudents: prev.totalStudents + 1
+        }));
+      }
+    } catch (error) {
+      console.error('Error registering student:', error);
+      alert(`Failed to register student: ${error.message}`);
+    }
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setStudentForm(prev => ({
+      ...prev,
+      [name]: value
+    }));
   };
 
   return (
@@ -164,98 +214,227 @@ const TeacherDashboard = () => {
         </div>
       </div>
 
-      <div className="dashboard-content">
-        <div className="dashboard-section">
-          <h2>Today's Classes</h2>
-          <div className="classes-list">
-            <div className="class-item">
-              <div className="class-time">09:00 AM</div>
-              <div className="class-subject">Mathematics - Grade 10</div>
-              <div className="class-status">
-                <button className="mark-attendance-btn">Mark Attendance</button>
-                <button className="download-excel-btn">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M14 3v4a1 1 0 001 1h4" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-                    <path d="M17 21H7a2 2 0 01-2-2V5a2 2 0 012-2h7l5 5v11a2 2 0 01-2 2z" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-                    <path d="M9 9h1v8H9M14 9h1v8h-1M9 13h6" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-                  </svg>
-                  Excel
-                </button>
+      <div className="dashboard-content-wrapper">
+        <div className="dashboard-main">
+          <div className="dashboard-section">
+            <h2>Today's Classes</h2>
+            <div className="classes-list">
+              <div className="class-item">
+                <div className="class-time">09:00 AM</div>
+                <div className="class-subject">Mathematics - Grade 10</div>
+                <div className="class-status">
+                  <button className="mark-attendance-btn">Mark Attendance</button>
+                  <button className="download-excel-btn">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M14 3v4a1 1 0 001 1h4" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                      <path d="M17 21H7a2 2 0 01-2-2V5a2 2 0 012-2h7l5 5v11a2 2 0 01-2 2z" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                      <path d="M9 9h1v8H9M14 9h1v8h-1M9 13h6" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                    </svg>
+                    Excel
+                  </button>
+                </div>
+              </div>
+              <div className="class-item">
+                <div className="class-time">11:00 AM</div>
+                <div className="class-subject">Physics - Grade 11</div>
+                <div className="class-status">
+                  <button className="mark-attendance-btn">Mark Attendance</button>
+                  <button className="download-excel-btn">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M14 3v4a1 1 0 001 1h4" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                      <path d="M17 21H7a2 2 0 01-2-2V5a2 2 0 012-2h7l5 5v11a2 2 0 01-2 2z" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                      <path d="M9 9h1v8H9M14 9h1v8h-1M9 13h6" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                    </svg>
+                    Excel
+                  </button>
+                </div>
+              </div>
+              <div className="class-item">
+                <div className="class-time">02:00 PM</div>
+                <div className="class-subject">Chemistry - Grade 12</div>
+                <div className="class-status">
+                  <button className="mark-attendance-btn">Mark Attendance</button>
+                  <button className="download-excel-btn">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M14 3v4a1 1 0 001 1h4" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                      <path d="M17 21H7a2 2 0 01-2-2V5a2 2 0 012-2h7l5 5v11a2 2 0 01-2 2z" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                      <path d="M9 9h1v8H9M14 9h1v8h-1M9 13h6" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                    </svg>
+                    Excel
+                  </button>
+                </div>
               </div>
             </div>
-            <div className="class-item">
-              <div className="class-time">11:00 AM</div>
-              <div className="class-subject">Physics - Grade 11</div>
-              <div className="class-status">
-                <button className="mark-attendance-btn">Mark Attendance</button>
-                <button className="download-excel-btn">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M14 3v4a1 1 0 001 1h4" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-                    <path d="M17 21H7a2 2 0 01-2-2V5a2 2 0 012-2h7l5 5v11a2 2 0 01-2 2z" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-                    <path d="M9 9h1v8H9M14 9h1v8h-1M9 13h6" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-                  </svg>
-                  Excel
-                </button>
+          </div>
+
+          <div className="dashboard-section">
+            <h2>Recent Activity</h2>
+            <div className="activity-list">
+              <div className="activity-item">
+                <div className="activity-time">2 hours ago</div>
+                <div className="activity-description">Marked attendance for Mathematics class</div>
               </div>
-            </div>
-            <div className="class-item">
-              <div className="class-time">02:00 PM</div>
-              <div className="class-subject">Chemistry - Grade 12</div>
-              <div className="class-status">
-                <button className="mark-attendance-btn">Mark Attendance</button>
-                <button className="download-excel-btn">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M14 3v4a1 1 0 001 1h4" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-                    <path d="M17 21H7a2 2 0 01-2-2V5a2 2 0 012-2h7l5 5v11a2 2 0 01-2 2z" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-                    <path d="M9 9h1v8H9M14 9h1v8h-1M9 13h6" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-                  </svg>
-                  Excel
-                </button>
+              <div className="activity-item">
+                <div className="activity-time">Yesterday</div>
+                <div className="activity-description">Updated Physics class schedule</div>
+              </div>
+              <div className="activity-item">
+                <div className="activity-time">2 days ago</div>
+                <div className="activity-description">Generated attendance report</div>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="dashboard-section">
-          <h2>Recent Activity</h2>
-          <div className="activity-list">
-            <div className="activity-item">
-              <div className="activity-time">2 hours ago</div>
-              <div className="activity-description">Marked attendance for Mathematics class</div>
-            </div>
-            <div className="activity-item">
-              <div className="activity-time">Yesterday</div>
-              <div className="activity-description">Updated Physics class schedule</div>
-            </div>
-            <div className="activity-item">
-              <div className="activity-time">2 days ago</div>
-              <div className="activity-description">Generated attendance report</div>
+        <div className="dashboard-sidebar">
+          <div className="dashboard-section">
+            <h2>Profile Information</h2>
+            <div className="profile-info">
+              <div className="profile-item">
+                <span className="profile-label">Teacher ID:</span>
+                <span className="profile-value">{user?.teacherId}</span>
+              </div>
+              <div className="profile-item">
+                <span className="profile-label">Email:</span>
+                <span className="profile-value">{user?.email}</span>
+              </div>
+              <div className="profile-item">
+                <span className="profile-label">Department:</span>
+                <span className="profile-value">{user?.department}</span>
+              </div>
+              <div className="profile-item">
+                <span className="profile-label">Phone:</span>
+                <span className="profile-value">{user?.phoneNumber}</span>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div className="dashboard-section">
-          <h2>Profile Information</h2>
-          <div className="profile-info">
-            <div className="profile-item">
-              <span className="profile-label">Teacher ID:</span>
-              <span className="profile-value">{user?.teacherId}</span>
+          <div className="register-student-card">
+            <div className="card-icon">
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                <circle cx="12" cy="7" r="4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
             </div>
-            <div className="profile-item">
-              <span className="profile-label">Email:</span>
-              <span className="profile-value">{user?.email}</span>
-            </div>
-            <div className="profile-item">
-              <span className="profile-label">Department:</span>
-              <span className="profile-value">{user?.department}</span>
-            </div>
-            <div className="profile-item">
-              <span className="profile-label">Phone:</span>
-              <span className="profile-value">{user?.phoneNumber}</span>
-            </div>
+            <h3>Register Student</h3>
+            <p>Add new students to your class roster and manage their information effectively.</p>
+            <button 
+              className="register-btn"
+              onClick={() => setShowStudentModal(true)}
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 5v14M5 12h14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+              Enter Student Portal
+            </button>
           </div>
         </div>
       </div>
+
+      {/* Student Registration Modal */}
+      {showStudentModal && (
+        <div className="modal-overlay" onClick={() => setShowStudentModal(false)}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-header">
+              <h2>Register Student</h2>
+              <button 
+                className="close-btn"
+                onClick={() => setShowStudentModal(false)}
+              >
+                ×
+              </button>
+            </div>
+            <form onSubmit={handleStudentFormSubmit}>
+              <div className="form-group">
+                <label htmlFor="name">Student Name</label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  value={studentForm.name}
+                  onChange={handleInputChange}
+                  placeholder="Enter student's full name"
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="usn">USN (University Seat Number)</label>
+                <input
+                  type="text"
+                  id="usn"
+                  name="usn"
+                  value={studentForm.usn}
+                  onChange={handleInputChange}
+                  placeholder="Enter USN (e.g., 1CR21CS001)"
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="rollNo">Roll Number</label>
+                <input
+                  type="text"
+                  id="rollNo"
+                  name="rollNo"
+                  value={studentForm.rollNo}
+                  onChange={handleInputChange}
+                  placeholder="Enter roll number"
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="branch">Branch</label>
+                <select
+                  id="branch"
+                  name="branch"
+                  value={studentForm.branch}
+                  onChange={handleInputChange}
+                  required
+                >
+                  <option value="">Select Branch</option>
+                  <option value="Computer Science">Computer Science</option>
+                  <option value="Information Science">Information Science</option>
+                  <option value="Electronics">Electronics</option>
+                  <option value="Mechanical">Mechanical</option>
+                  <option value="Civil">Civil</option>
+                  <option value="Electrical">Electrical</option>
+                </select>
+              </div>
+              <div className="form-group">
+                <label htmlFor="semester">Semester</label>
+                <select
+                  id="semester"
+                  name="semester"
+                  value={studentForm.semester}
+                  onChange={handleInputChange}
+                  required
+                >
+                  <option value="">Select Semester</option>
+                  <option value="1">1st Semester</option>
+                  <option value="2">2nd Semester</option>
+                  <option value="3">3rd Semester</option>
+                  <option value="4">4th Semester</option>
+                  <option value="5">5th Semester</option>
+                  <option value="6">6th Semester</option>
+                  <option value="7">7th Semester</option>
+                  <option value="8">8th Semester</option>
+                </select>
+              </div>
+              <div className="form-actions">
+                <button 
+                  type="button" 
+                  className="btn btn-secondary"
+                  onClick={() => setShowStudentModal(false)}
+                >
+                  Cancel
+                </button>
+                <button type="submit" className="btn btn-primary">
+                  Register Student
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
