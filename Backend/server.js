@@ -27,7 +27,16 @@ app.use('/api/', limiter);
 
 // CORS configuration
 app.use(cors({
-  origin: process.env.CORS_ORIGIN || 'http://localhost:5173',
+  origin: function(origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    const allowedOrigins = [process.env.CORS_ORIGIN || 'http://localhost:5173', 'https://mini.nischay.tech'];
+    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      console.log(`Origin ${origin} not allowed by CORS`);
+      callback(null, true); // Still allow for now to avoid blocking unexpected origins
+    }
+  },
   credentials: true,
   optionsSuccessStatus: 200
 }));
