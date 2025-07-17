@@ -25,6 +25,24 @@
   font-weight: 700;
   letter-spacing: -0.5px;
 }
+
+.dashboard-navbar {
+  background: rgba(255, 255, 255, 0.08) !important;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+}
+
+.dashboard-navbar .logo-text {
+  color: #fff;
+}
+
+.dashboard-navbar .nav-links a {
+  color: #fff;
+}
+
+.dashboard-navbar .nav-links a:hover {
+  color: #A259FF;
+}
 .nav-links {
   display: flex;
   gap: 32px;
@@ -251,6 +269,40 @@
   .get-started:hover, .get-started:active {
     background: #f6f8ff;
     color: #5B8CFF;
+  }
+  
+  .dashboard-btn {
+    border: none;
+    border-radius: 6px;
+    padding: 12px 20px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    background-color: #5B8CFF;
+    color: white;
+    transition: all 0.2s ease;
+  }
+  
+  .dashboard-btn:hover, .dashboard-btn:active {
+    background-color: #4a73e0;
+  }
+  
+  .logout-btn {
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    padding: 12px 20px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    background-color: transparent;
+    color: #ff5b5b;
+    transition: all 0.2s ease;
+    margin-left: 10px;
+  }
+  
+  .logout-btn:hover, .logout-btn:active {
+    background-color: #fff1f1;
+    border-color: #ff5b5b;
   }
 }
 

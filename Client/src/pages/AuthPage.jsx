@@ -1,10 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as THREE from 'three';
+import { useAuth } from '../context/AuthContext';
 import './AuthPage.css';
 
 const AuthPage = () => {
   const navigate = useNavigate();
+  const { login } = useAuth();
   const [isLogin, setIsLogin] = useState(true);
   const [userType, setUserType] = useState('student');
   const [formData, setFormData] = useState({
@@ -219,13 +221,19 @@ const AuthPage = () => {
 
       if (data.status === 'success') {
         setSuccess(isLogin ? 'Login successful!' : 'Registration successful!');
-        localStorage.setItem('token', data.data.token);
-        localStorage.setItem('refreshToken', data.data.refreshToken);
-        localStorage.setItem('user', JSON.stringify(data.data.user));
         
-        // Redirect to dashboard or home page
+        // Use AuthContext login function
+        login(data.data.user, data.data.token);
+        
+        // Redirect to appropriate dashboard
         setTimeout(() => {
-          window.location.href = '/dashboard';
+          if (data.data.user.userType === 'student') {
+            navigate('/student-dashboard');
+          } else if (data.data.user.userType === 'teacher') {
+            navigate('/teacher-dashboard');
+          } else {
+            navigate('/');
+          }
         }, 1500);
       } else {
         setError(data.message || 'An error occurred');
@@ -266,7 +274,7 @@ const AuthPage = () => {
         Back to Home
       </button>
       
-      <div className="auth-container">
+      <div className="auth-container" style={{ marginTop: '-180px' }}>
         <div className="auth-card">
           <div className="auth-header">
             <div className="auth-logo">

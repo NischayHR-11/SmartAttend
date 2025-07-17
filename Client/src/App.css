@@ -18,6 +18,17 @@ body, html, #root, .main-bg {
   overflow-x: hidden;
 }
 
+.loading-screen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0f0f23 0%, #1a1a3e 50%, #2d2d5f 100%);
+  color: white;
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
 /* Navbar */
 .navbar {
   width: 100%;

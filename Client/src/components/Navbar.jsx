@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 import './Navbar.css';
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
+  const { isAuthenticated, logout } = useAuth();
 
   const handleSignInClick = () => {
     navigate('/auth');
@@ -16,9 +18,20 @@ const Navbar = () => {
     setMenuOpen(false);
   };
 
+  const handleLogout = () => {
+    logout();
+    navigate('/');
+    setMenuOpen(false);
+  };
+
+  const handleLogoClick = () => {
+    navigate('/');
+    setMenuOpen(false);
+  };
+
   return (
     <header className="navbar">
-      <div className="logo-section">
+      <div className="logo-section" onClick={handleLogoClick} style={{ cursor: 'pointer' }}>
         <div className="logo-icon">
           <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
             <rect width="36" height="36" rx="10" fill="url(#paint0_linear_1_2)"/>
@@ -48,8 +61,14 @@ const Navbar = () => {
             <a href="#footer" onClick={() => setMenuOpen(false)}>Contact</a>
           </nav>
           <div className="nav-actions show">
-            <button className="sign-in" onClick={handleSignInClick}>Sign In</button>
-            <button className="get-started" onClick={handleGetStartedClick}>Get Started</button>
+            {!isAuthenticated() ? (
+              <>
+                <button className="sign-in" onClick={handleSignInClick}>Sign In</button>
+                <button className="get-started" onClick={handleGetStartedClick}>Get Started</button>
+              </>
+            ) : (
+              <button className="logout-btn" onClick={handleLogout}>Logout</button>
+            )}
           </div>
         </div>
       )}
@@ -61,8 +80,14 @@ const Navbar = () => {
         <a href="#footer">Contact</a>
       </nav>
       <div className="nav-actions desktop">
-        <button className="sign-in" onClick={handleSignInClick}>Sign In</button>
-        <button className="get-started" onClick={handleGetStartedClick}>Get Started</button>
+        {!isAuthenticated() ? (
+          <>
+            <button className="sign-in" onClick={handleSignInClick}>Sign In</button>
+            <button className="get-started" onClick={handleGetStartedClick}>Get Started</button>
+          </>
+        ) : (
+          <button className="logout-btn" onClick={handleLogout}>Logout</button>
+        )}
       </div>
     </header>
   );
