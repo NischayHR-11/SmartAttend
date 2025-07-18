@@ -9,6 +9,7 @@ require('dotenv').config();
 // Import routes
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/users');
+const studentsRoutes = require('./routes/students');
 
 const app = express();
 
@@ -26,20 +27,46 @@ const limiter = rateLimit({
 app.use('/api/', limiter);
 
 // CORS configuration
-app.use(cors({
+const corsOptions = {
   origin: function(origin, callback) {
     // Allow requests with no origin (like mobile apps or curl requests)
-    const allowedOrigins = [process.env.CORS_ORIGIN || 'http://localhost:5173', 'https://mini.nischay.tech'];
-    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+    const allowedOrigins = [
+      'http://localhost:5173',
+      'http://localhost:5174', 
+      'https://mini.nischay.tech',
+      'http://mini.nischay.tech',
+      'https://smartattendbackend.onrender.com'
+    ];
+    
+    // Allow requests with no origin (like mobile apps, Postman, etc.)
+    if (!origin) {
+      return callback(null, true);
+    }
+    
+    if (allowedOrigins.indexOf(origin) !== -1) {
+      console.log(`✅ CORS: Origin ${origin} allowed`);
       callback(null, true);
     } else {
-      console.log(`Origin ${origin} not allowed by CORS`);
-      callback(null, true); // Still allow for now to avoid blocking unexpected origins
+      console.log(`❌ CORS: Origin ${origin} not allowed`);
+      // For development, allow all origins
+      if (process.env.NODE_ENV === 'development') {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
     }
   },
   credentials: true,
-  optionsSuccessStatus: 200
-}));
+  optionsSuccessStatus: 200,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept', 'Origin'],
+  exposedHeaders: ['Content-Range', 'X-Content-Range']
+};
+
+app.use(cors(corsOptions));
+
+// Handle preflight OPTIONS requests
+app.options('*', cors(corsOptions));
 
 // Body parsing middleware
 app.use(express.json({ limit: '10mb' }));
@@ -64,6 +91,7 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/smartatte
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/students', studentsRoutes);
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {
@@ -101,6 +129,7 @@ const startServer = (port) => {
     .on('listening', () => {
       console.log(`🚀 Server running on port ${port}`);
       console.log(`📊 Environment: ${process.env.NODE_ENV}`);
+      console.log(`🔗 API Base URL: http://localhost:${port}`);
     })
     .on('error', (err) => {
       if (err.code === 'EADDRINUSE') {
