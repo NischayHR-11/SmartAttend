@@ -104,10 +104,19 @@ router.post('/register', auth, async (req, res) => {
       errors.forEach(err => console.error(`   • ${err}`));
       console.error('==========================================');
       
+      // Create a more user-friendly error message
+      let userFriendlyMessage = 'Validation error: ';
+      if (errors.length === 1) {
+        userFriendlyMessage = errors[0];
+      } else {
+        userFriendlyMessage = `Multiple validation errors: ${errors.join(', ')}`;
+      }
+      
       return res.status(400).json({
         status: 'error',
-        message: 'Validation error',
-        errors
+        message: userFriendlyMessage,
+        errors,
+        details: 'Please check all required fields and their formats'
       });
     }
 
@@ -116,15 +125,28 @@ router.post('/register', auth, async (req, res) => {
       console.error('🔴 Duplicate Entry Error: Student with this USN already exists');
       console.error('==========================================');
       
+      // Extract the field that caused the duplicate error
+      const field = Object.keys(error.keyPattern)[0];
+      const value = error.keyValue[field];
+      
       return res.status(400).json({
         status: 'error',
-        message: 'Student with this USN already exists'
+        message: `Student with USN '${value}' already exists`,
+        field,
+        value,
+        details: 'Please use a different USN or update the existing student record'
       });
     }
 
+    // Handle other errors
+    console.error('🔴 Registration Error:', error.message);
+    console.error('==========================================');
+    
     res.status(500).json({
       status: 'error',
-      message: 'Internal server error'
+      message: 'Registration failed due to server error',
+      details: 'Please try again later or contact support if the problem persists',
+      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error'
     });
   }
 });
