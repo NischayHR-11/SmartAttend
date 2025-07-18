@@ -86,9 +86,38 @@ const TeacherDashboard = () => {
       }
     } catch (error) {
       console.error('Error registering student:', error);
-      toast.error(`❌ Registration Failed!`, {
+      
+      // Extract specific error message
+      let errorMessage = 'Registration Failed!';
+      
+      if (error.message) {
+        // Handle validation errors
+        if (error.message.includes('validation failed')) {
+          errorMessage = 'Validation Error: Please check your input';
+        } else if (error.message.includes('USN already exists')) {
+          errorMessage = 'Student with this USN already exists';
+        } else if (error.message.includes('USN format')) {
+          errorMessage = 'Invalid USN format (e.g., 1MS21CS001)';
+        } else if (error.message.includes('Branch')) {
+          errorMessage = 'Please select a valid branch';
+        } else if (error.message.includes('Semester')) {
+          errorMessage = 'Please select a valid semester';
+        } else if (error.message.includes('name')) {
+          errorMessage = 'Student name is required';
+        } else if (error.message.includes('rollNo')) {
+          errorMessage = 'Roll number is required';
+        } else if (error.message.includes('Network')) {
+          errorMessage = 'Network error. Please check your connection';
+        } else if (error.message.includes('CORS')) {
+          errorMessage = 'Server connection error. Please try again';
+        } else {
+          errorMessage = error.message;
+        }
+      }
+      
+      toast.error(`❌ ${errorMessage}`, {
         position: "top-right",
-        autoClose: 5000,
+        autoClose: 6000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
