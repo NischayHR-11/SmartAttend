@@ -11,13 +11,7 @@ const studentSchema = new mongoose.Schema({
   usn: {
     type: String,
     required: [true, 'USN is required'],
-    unique: true,
-    trim: true,
-    uppercase: true,
-    match: [
-      /^[0-9]{1,2}[A-Z]{2,3}[0-9]{2}[A-Z]{2,3}[0-9]{3}$/,
-      'Please provide a valid USN format (e.g., 1MS21CS001 or 01JST22UCS097)'
-    ]
+    unique: true,   
   },
   rollNo: {
     type: String,
