@@ -743,6 +743,49 @@
   box-sizing: border-box;
 }
 
+/* Style for select dropdown options */
+.form-group select option {
+  background: #2d2d5f;
+  color: #fff;
+  padding: 10px;
+  font-size: 1rem;
+  border: none;
+}
+
+/* Alternative styling for better visibility */
+.form-group select option:hover {
+  background: #3d3d7f;
+}
+
+.form-group select option:checked {
+  background: #5B8CFF;
+  color: #fff;
+}
+
+/* For Firefox */
+.form-group select option:disabled {
+  background: #1a1a3e;
+  color: #888;
+}
+
+/* Style for select dropdown when opened */
+.form-group select:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* Fix for select dropdown arrow */
+.form-group select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='%23fff' viewBox='0 0 16 16'%3e%3cpath d='M8 11l-5-5h10l-5 5z'/%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 15px center;
+  background-size: 16px;
+  padding-right: 45px;
+  cursor: pointer;
+}
+
 .form-group input::placeholder {
   color: rgba(255, 255, 255, 0.5);
 }
@@ -753,6 +796,39 @@
   border-color: #5B8CFF;
   box-shadow: 0 0 0 3px rgba(91, 140, 255, 0.2);
   background: rgba(255, 255, 255, 0.08);
+}
+
+/* Enhanced dropdown styling for better visibility */
+.form-group select {
+  background-color: rgba(45, 45, 95, 0.8) !important;
+  color: #fff !important;
+}
+
+.form-group select option {
+  background-color: #2d2d5f !important;
+  color: #ffffff !important;
+  padding: 12px 16px;
+  font-weight: 500;
+}
+
+.form-group select optgroup {
+  background-color: #1a1a3e;
+  color: #fff;
+  font-weight: 600;
+}
+
+/* For webkit browsers (Chrome, Safari) */
+.form-group select::-webkit-scrollbar {
+  width: 8px;
+}
+
+.form-group select::-webkit-scrollbar-track {
+  background: #1a1a3e;
+}
+
+.form-group select::-webkit-scrollbar-thumb {
+  background: #5B8CFF;
+  border-radius: 4px;
 }
 
 .form-actions {
@@ -809,4 +885,209 @@
     padding: 30px;
     margin: 20px;
   }
+}
+
+/* Toast Notification Styles */
+.Toastify__toast-container {
+  z-index: 10000;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Custom Success Toast */
+.custom-success-toast {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
+  border-radius: 16px;
+  box-shadow: 0 15px 35px rgba(16, 185, 129, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  animation: slideInRight 0.3s ease-out;
+}
+
+.custom-success-toast .Toastify__toast-body {
+  padding: 20px;
+  font-size: 16px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.custom-success-toast .Toastify__toast-body::before {
+  content: "🎉";
+  font-size: 24px;
+  animation: bounce 1s ease-in-out;
+}
+
+/* Custom Error Toast */
+.custom-error-toast {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  color: white;
+  border-radius: 16px;
+  box-shadow: 0 15px 35px rgba(239, 68, 68, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  animation: slideInRight 0.3s ease-out;
+}
+
+.custom-error-toast .Toastify__toast-body {
+  padding: 20px;
+  font-size: 16px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.custom-error-toast .Toastify__toast-body::before {
+  content: "❌";
+  font-size: 24px;
+  animation: shake 0.5s ease-in-out;
+}
+
+/* Custom Toast Body */
+.custom-toast-body {
+  margin: 0;
+  padding: 0;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+/* Custom Progress Bar */
+.custom-progress-bar {
+  background: rgba(255, 255, 255, 0.9);
+  height: 4px;
+  border-radius: 2px;
+}
+
+/* Enhanced default toast styles */
+.Toastify__toast--success {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
+  border-radius: 16px;
+  box-shadow: 0 15px 35px rgba(16, 185, 129, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+.Toastify__toast--error {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  color: white;
+  border-radius: 16px;
+  box-shadow: 0 15px 35px rgba(239, 68, 68, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+.Toastify__toast--info {
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  color: white;
+  border-radius: 16px;
+  box-shadow: 0 15px 35px rgba(59, 130, 246, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+.Toastify__toast--warning {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  color: white;
+  border-radius: 16px;
+  box-shadow: 0 15px 35px rgba(245, 158, 11, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+.Toastify__progress-bar--success {
+  background: rgba(255, 255, 255, 0.9);
+  height: 4px;
+  border-radius: 2px;
+}
+
+.Toastify__progress-bar--error {
+  background: rgba(255, 255, 255, 0.9);
+  height: 4px;
+  border-radius: 2px;
+}
+
+.Toastify__progress-bar--info {
+  background: rgba(255, 255, 255, 0.9);
+  height: 4px;
+  border-radius: 2px;
+}
+
+.Toastify__progress-bar--warning {
+  background: rgba(255, 255, 255, 0.9);
+  height: 4px;
+  border-radius: 2px;
+}
+
+.Toastify__close-button {
+  color: rgba(255, 255, 255, 0.8);
+  opacity: 0.8;
+  font-size: 18px;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.Toastify__close-button:hover {
+  opacity: 1;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+}
+
+/* Animations */
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  10%, 30%, 50%, 70%, 90% {
+    transform: translateX(-3px);
+  }
+  20%, 40%, 60%, 80% {
+    transform: translateX(3px);
+  }
+}
+
+/* Enhanced hover effects */
+.Toastify__toast:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+/* Custom dark theme adjustments */
+.Toastify__toast-container--top-right {
+  top: 80px;
+  right: 20px;
+}
+
+.Toastify__toast {
+  min-height: 70px;
+  font-size: 16px;
+  margin-bottom: 12px;
 }

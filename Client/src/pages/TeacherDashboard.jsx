@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { API_ENDPOINTS, apiCall } from '../config/api';
+import { toast, ToastContainer, Slide } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './Dashboard.css';
 
 const TeacherDashboard = () => {
@@ -51,7 +53,7 @@ const TeacherDashboard = () => {
         body: JSON.stringify(studentForm),
       });
 
-      if (response.success) {
+      if (response.status === 'success') {
         // Reset form and close modal
         setStudentForm({
           name: '',
@@ -61,7 +63,20 @@ const TeacherDashboard = () => {
           semester: ''
         });
         setShowStudentModal(false);
-        alert('Student registered successfully!');
+        toast.success(
+          `🎉 ${response.data.student.name} registered successfully!`,
+          {
+            position: "top-right",
+            autoClose: 4000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            className: 'custom-success-toast',
+            bodyClassName: 'custom-toast-body',
+            progressClassName: 'custom-progress-bar'
+          }
+        );
         
         // Refresh student count
         setStats(prev => ({
@@ -71,7 +86,17 @@ const TeacherDashboard = () => {
       }
     } catch (error) {
       console.error('Error registering student:', error);
-      alert(`Failed to register student: ${error.message}`);
+      toast.error(`❌ Registration Failed!`, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        className: 'custom-error-toast',
+        bodyClassName: 'custom-toast-body',
+        progressClassName: 'custom-progress-bar'
+      });
     }
   };
 
@@ -365,7 +390,7 @@ const TeacherDashboard = () => {
                   name="usn"
                   value={studentForm.usn}
                   onChange={handleInputChange}
-                  placeholder="Enter USN (e.g., 1CR21CS001)"
+                  placeholder="Enter USN (e.g., 1MS21CS001 or 01JST22UCS097)"
                   required
                 />
               </div>
@@ -391,12 +416,14 @@ const TeacherDashboard = () => {
                   required
                 >
                   <option value="">Select Branch</option>
-                  <option value="Computer Science">Computer Science</option>
-                  <option value="Information Science">Information Science</option>
-                  <option value="Electronics">Electronics</option>
-                  <option value="Mechanical">Mechanical</option>
-                  <option value="Civil">Civil</option>
-                  <option value="Electrical">Electrical</option>
+                  <option value="CSE">Computer Science Engineering (CSE)</option>
+                  <option value="ISE">Information Science Engineering (ISE)</option>
+                  <option value="ECE">Electronics & Communication Engineering (ECE)</option>
+                  <option value="EEE">Electrical & Electronics Engineering (EEE)</option>
+                  <option value="ME">Mechanical Engineering (ME)</option>
+                  <option value="CE">Civil Engineering (CE)</option>
+                  <option value="IE">Industrial Engineering (IE)</option>
+                  <option value="BT">Biotechnology (BT)</option>
                 </select>
               </div>
               <div className="form-group">
@@ -435,6 +462,22 @@ const TeacherDashboard = () => {
           </div>
         </div>
       )}
+      
+      {/* Toast Container for notifications */}
+      <ToastContainer
+        position="top-right"
+        autoClose={4000}
+        hideProgressBar={false}
+        newestOnTop={true}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+        limit={3}
+        transition={Slide}
+      />
     </div>
   );
 };
